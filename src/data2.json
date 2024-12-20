@@ -1,0 +1,203 @@
+// Atasez 2 responseuri aici mai jos, sunt doua jsonuri, fiecare are cateva fields cu types pe ele, puteti sa faceti voi mix la mai multe typeuri impreuna si sa ajustati id-ul cu unul din lista din response-ul pe care vi l-am dat anterior si sa va jucati cu ele, sa vedeti cum ar arata forma daca sunt pasate in ordine diferita, fara anumite fielduri si sa incercati sa faceti forma sa arate cat mai ok cu mai multe field typeuri diferite, puteti de asemenea sa va mai uitati prin PrimeVue daca nu sunt incluse anumite tipuri de fielduri in responseurile de la mine sa le adaugati voi.
+
+{
+  "id": "bd8c9b49-a8db-4894-ba70-33c7745e8ef4",
+  "label": "Domeintabelwaarde details",
+  "fields": [
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "Guid",
+	  "bindingKey": "id",
+	  "settings": {
+		"maxLength": 36
+	  },
+	  "validations": [
+		{ "name": "uniqueFieldInNestedSchemaData" },
+		{ "name": "required" }
+	  ],
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "NumberField",
+	  "label": "ID",
+	  "bindingKey": "sikbId",
+	  "validations": [
+		{ "name": "uniqueFieldInNestedSchemaData" },
+		{ "name": "required" }
+	  ],
+	  "type": "integer"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "SIKB Code",
+	  "bindingKey": "sikbCode",
+	  "settings": { "maxLength": 50 },
+	  "validations": [{ "name": "uniqueFieldInNestedSchemaData" }],
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextAreaField",
+	  "label": "Omschrijving",
+	  "bindingKey": "description",
+	  "settings": {
+		"maxLength": 100
+	  },
+	  "validations": [
+		{ "name": "uniqueFieldInNestedSchemaData" },
+		{ "name": "required" }
+	  ],
+	  "type": "string"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextAreaField",
+	  "label": "Definitie",
+	  "bindingKey": "definition",
+	  "settings": {
+		"maxLength": 500
+	  },
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "Groep",
+	  "bindingKey": "groupName",
+	  "settings": { "maxLength": 100 },
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "CASNummer",
+	  "bindingKey": "casNr",
+	  "settings": { "maxLength": 15 },
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "Aquo Code",
+	  "bindingKey": "aquoCode",
+	  "settings": { "maxLength": 50 },
+	  "validations": [{ "name": "uniqueFieldInNestedSchemaData" }],
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "Vervangen door",
+	  "bindingKey": "replacedBy",
+	  "settings": { },
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "DateTimeField",
+	  "label": "Begin geldigheid",
+	  "bindingKey": "timestampActive",
+	  "settings": { "type": "date" },
+	  "type": "integer, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "DateTimeField",
+	  "label": "Eind geldigheid",
+	  "bindingKey": "timestampInactive",
+	  "settings": { "type": "date" },
+	  "type": "integer, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "DateTimeField",
+	  "label": "Laatste wijziging",
+	  "bindingKey": "updatedAt",
+	  "settings": {
+		"type": "date",
+		"disabled": true
+	  },
+	  "type": "integer, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextField",
+	  "label": "Eenheid Dimensie",
+	  "bindingKey": "unitDimension",
+	  "settings": {},
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextAreaField",
+	  "label": "Aanvullende info",
+	  "bindingKey": "additionalInfo",
+	  "settings": {
+		"maxLength": 1000
+	  },
+	  "type": "string, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "NumberField",
+	  "label": "Eenheid Factor",
+	  "bindingKey": "unitFactor",
+	  "settings": {},
+	  "type": "number, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "TextAreaField",
+	  "label": "Acties door beheerder",
+	  "bindingKey": "adminActions",
+	  "settings": {
+		"maxLength": 1000
+	  },
+	  "type": "string, null"
+	}
+  ]
+}
+
+Aici se termina primul si incepe al doilea :)
+
+{
+  "id": "582ec9bf-632a-4d8c-b061-5343cfb6c467",
+  "label": "Opgenomen in:",
+  "fields": [
+	{
+	  "showPattern": "",
+	  "inputType": "CheckboxField",
+	  "bindingKey": "supportedInExchange.broSadImbroA",
+	  "contextLabel": "BRO SAD IMBRO\\A",
+	  "settings": {},
+	  "type": "boolean, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "CheckboxField",
+	  "bindingKey": "supportedInExchange.broSadImbro",
+	  "contextLabel": "BRO SAD IMBRO",
+	  "settings": {},
+	  "type": "boolean, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "CheckboxField",
+	  "bindingKey": "supportedInExchange.broSldImbroA",
+	  "contextLabel": "BRO SLD IMBRO\\A",
+	  "settings": {},
+	  "type": "boolean, null"
+	},
+	{
+	  "showPattern": "",
+	  "inputType": "CheckboxField",
+	  "bindingKey": "supportedInExchange.broSldImbro",
+	  "contextLabel": "BRO SLD IMBRO",
+	  "settings": {},
+	  "type": "boolean, null"
+	}
+  ]
+}
