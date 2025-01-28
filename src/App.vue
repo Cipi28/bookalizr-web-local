@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import PageLayout from "@/components/layouts/PageLayout.vue";
 
 </script>
 

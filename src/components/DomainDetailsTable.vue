@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Button from 'primevue/button';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'DomainDetailsTable',
@@ -23,13 +25,27 @@ export default defineComponent({
   components: {
     DataTable,
     Column,
+    Button,
+  },
+  setup() {
+    const router = useRouter();
+
+    const onRowClick = (event) => {
+      const domainId = event.data.id;
+      router.push(`/domain-tables/${domainId}`);
+    };
+
+
+    return {
+      onRowClick,
+    };
   },
 });
 </script>
 
 
 <template>
-    <DataTable :value="filteredEntries">
+    <DataTable :value="filteredEntries" @row-click="onRowClick">
       <Column field="domainName" header="Domain Name"/>
       <Column field="name" header="Name"  />
       <Column field="description" header="Description" />

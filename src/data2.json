@@ -1,7 +1,7 @@
 // Atasez 2 responseuri aici mai jos, sunt doua jsonuri, fiecare are cateva fields cu types pe ele, puteti sa faceti voi mix la mai multe typeuri impreuna si sa ajustati id-ul cu unul din lista din response-ul pe care vi l-am dat anterior si sa va jucati cu ele, sa vedeti cum ar arata forma daca sunt pasate in ordine diferita, fara anumite fielduri si sa incercati sa faceti forma sa arate cat mai ok cu mai multe field typeuri diferite, puteti de asemenea sa va mai uitati prin PrimeVue daca nu sunt incluse anumite tipuri de fielduri in responseurile de la mine sa le adaugati voi.
 
 {
-  "id": "bd8c9b49-a8db-4894-ba70-33c7745e8ef4",
+  "id": "04be2365-3d05-4903-a53e-edafef7111e8",
   "label": "Domeintabelwaarde details",
   "fields": [
 	{

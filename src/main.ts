@@ -1,31 +1,46 @@
 import './assets/main.css'
+import 'primeicons/primeicons.css';
 
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
-import Button from "primevue/button"
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
+import Toast from 'vue-toastification';
+import { createPinia } from 'pinia'
+import 'vue-toastification/dist/index.css';
+import { useAuthStore } from '@/stores/authStore';
+import Cookies from 'js-cookie';
+interface ThemeOptions {
+  darkModeSelector: string;
+}
+
+interface ThemePreset {
+  PaletteDesignToken: any;
+  SemanticDesignTokens: any;
+  PrimitiveDesignTokens: any;
+  ColorSchemeDesignToken: any;
+}
+
+interface Theme {
+  preset: ThemePreset;
+  options: ThemeOptions;
+}
 
 const app = createApp(App)
-
-app.component('Button', Button);
-app.component('DataTable', DataTable);
-app.component('Column', Column);
+const pinia = createPinia()
 
 app.use(router)
-app.use(axios)
+app.use(Toast)
+app.use(pinia)
+
 app.use(PrimeVue, {
-    theme: {
-        preset: Aura,
-        options: {
-            darkModeSelector: '.my-app-dark'
-        }
-        
+  theme:  {
+    preset: Aura as ThemePreset,
+    options: {
+      darkModeSelector: '.my-app-dark'
     }
+  } as Theme
 });
 
 app.mount('#app')

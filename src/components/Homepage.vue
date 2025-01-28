@@ -4,8 +4,11 @@ import Button from "primevue/button"
 import DomainsTable from './DomainsTable.vue';
 import { call } from '@/composables/HTTPClient.js';
 import { toggleDarkMode } from '@/composables/ThemeService';
+import { useAuthStore } from '@/stores/authStore';
+import { useDomains } from '@/composables/DomainsAPI';
 
 
+// noinspection TypeScriptValidateTypes
 export default defineComponent({
   name: 'Homepage',
   data() {
@@ -24,26 +27,13 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchData() {
-      call('get', '/v3/3ccd646a-9f84-4d17-ad51-d66d6218a9e2').then((data: {
-        data: any; map: (arg0: (item: { data: { timestampActive: string | number | Date; }; }) => { timestampActive: string; }) => never[]; 
-      }) => {
+    async fetchData() {
+      const { getDomains } = useDomains();
+      this.domaniTables = await getDomains();
 
-        this.domaniTables = data.data.map((item: { data: { timestampActive: string | number | Date; }; }) => {
-          return {
-            ...item.data,
-            timestampActive: new Date(item.data.timestampActive).toLocaleString()
-          };
-        });
-
-        const uniqueDomainNames = [...new Set(this.domaniTables.map(item => item.domainName))];
-        this.domainNames = uniqueDomainNames.map(domainName => ({ domainName }));
-
-      })
-      .catch((error: null) => {
-        this.error = error;
-      });
-    },
+      const uniqueDomainNames = [...new Set(this.domaniTables.map(item => item.domainName))];
+      this.domainNames = uniqueDomainNames.map(domainName => ({ domainName }));
+    }
   },
   components: {
     Button,
@@ -51,6 +41,16 @@ export default defineComponent({
   },
   mounted() {
     this.fetchData();
+  },
+  setup() {
+    const authStore = useAuthStore();
+    const token = authStore.jwt;
+
+    console.log('JWT Token:', token);
+
+    return {
+      token,
+    };
   },
 });
 </script>
