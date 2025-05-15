@@ -43,10 +43,10 @@ router.beforeEach((to, from, next) => {
       const decodedToken: any = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      if (decodedToken.iat < currentTime) {
-        authStore.logout();
-        return next('/login');
-      }
+      // if (decodedToken.iat < currentTime) {
+      //   authStore.logout();
+      //   return next('/login');
+      // }
   }
 
 
