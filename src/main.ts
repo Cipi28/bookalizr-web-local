@@ -9,8 +9,6 @@ import Aura from '@primevue/themes/aura';
 import Toast from 'vue-toastification';
 import { createPinia } from 'pinia'
 import 'vue-toastification/dist/index.css';
-import { useAuthStore } from '@/stores/authStore';
-import Cookies from 'js-cookie';
 interface ThemeOptions {
   darkModeSelector: string;
 }

@@ -27,9 +27,8 @@ export default defineComponent({
 
     const onSubmit = async () => {
       const { login } = useAuth();
-        const jwt = await login(credentials.value, authStore);
-        console.log('Response:', jwt);
-        router.push(`/`);
+      const jwt = await login(credentials.value, authStore);
+      router.push(`/`);
     };
 
     return {
@@ -63,6 +62,9 @@ export default defineComponent({
           <div class="button-container">
             <Button label="Login" type="submit" />
           </div>
+          <div class="login-link">
+            Dont have an account? <router-link to="/register">Register</router-link>
+          </div>
         </Form>
       </template>
     </Card>
@@ -92,5 +94,10 @@ export default defineComponent({
 
 .center-card {
   width: 100%;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
 }
 </style>

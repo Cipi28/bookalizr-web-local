@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import DomainPageView from '@/views/DomainPageView.vue'
-import DomainEditPageView from '@/views/DomainEditPageView.vue'
 import NotFoundView from '@/views/NotFoundView.vue';
 import PageLayout from "@/components/layouts/PageLayout.vue";
 import LoginPageView from "@/views/LoginPageView.vue";
+import RegisterView from "@/views/RegisterView.vue";
 import { useAuthStore } from '@/stores/authStore';
 import { jwtDecode } from 'jwt-decode';
 
@@ -17,7 +17,6 @@ const router = createRouter({
       children: [
         { path: '', name: 'Home', component: HomeView },
         { path: '/domain-tables/:id/', name: 'domain', component: DomainPageView },
-        { path: '/domain-tables/:id/edit', name: 'DomainEditPage', component: DomainEditPageView },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
       ],
     },
@@ -26,12 +25,17 @@ const router = createRouter({
       name: 'Login',
       component: LoginPageView,
     },
+    {
+      path: '/register',
+      name: 'Register',
+      component: RegisterView,
+    }
   ],
 });
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
-  const publicPages = ['/login'];
+  const publicPages = ['/login', '/register'];
   const authRequired = !publicPages.includes(to.path);
   const token = authStore.jwt;
 

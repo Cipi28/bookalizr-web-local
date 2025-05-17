@@ -1,4 +1,7 @@
 {
+  "register": {
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hbmVhIENpcHJpYW4iLCJpYXQiOjE3MzgwNjU2OTd9.C9xBZ8z4m4UgqHtDkPOCuZ8LASkGRNuDmEWtUYLsoT8"
+  },
   "login": {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hbmVhIENpcHJpYW4iLCJpYXQiOjE3MzgwNjU2OTd9.C9xBZ8z4m4UgqHtDkPOCuZ8LASkGRNuDmEWtUYLsoT8"
   },

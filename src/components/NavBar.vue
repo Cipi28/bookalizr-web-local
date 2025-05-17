@@ -17,8 +17,8 @@ export default defineComponent({
 
     const items = [
       { label: 'Home', icon: 'pi pi-home', command: () => router.push('/') },
-      { label: 'About', icon: 'pi pi-table', command: () => router.push('/about') },
-      { label: 'Contact', icon: 'pi pi-pencil', command: () => router.push('/contact') },
+      // { label: 'About', icon: 'pi pi-table', command: () => router.push('/about') },
+      // { label: 'Contact', icon: 'pi pi-pencil', command: () => router.push('/contact') },
     ];
 
     const logout = () => {
@@ -34,7 +34,7 @@ export default defineComponent({
 <template>
   <Menubar :model="items" class="custom-menubar">
     <template #start>
-      <div class="logo">Cipi's Domains</div>
+      <div class="logo">Bookalizr</div>
     </template>
     <template #end >
       <Button @click="logout" class="logout-button">Logout</Button>
