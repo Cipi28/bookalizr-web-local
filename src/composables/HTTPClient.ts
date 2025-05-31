@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig, type Method } from 'axios';
 import { useAuthStore } from '@/stores/authStore';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'http://localhost:5002';
 
 
 export async function call(method: Method, endpoint: string, data?: any, config?: AxiosRequestConfig) {

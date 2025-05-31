@@ -54,7 +54,8 @@ export default defineComponent({
 
 <template>
   <div class="register-container">
-    <Card style="width: 25rem;">
+    <Card style="width: 25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;" >
       <template #title>
         <div class="title-container">
           <h2>Register</h2>
@@ -64,17 +65,25 @@ export default defineComponent({
         <form @submit.prevent="onSubmit">
           <div class="p-field">
             <label for="name">Name</label>
-            <InputText id="name" v-model="user.name" required style="margin-bottom: 1rem; width: 100%"/>
+            <InputText id="name" v-model="user.name" required class="password-full-width"/>
           </div>
           <div class="p-field">
             <label for="email">Email</label>
-            <InputText id="email" v-model="user.email" type="email" required style="margin-bottom: 1rem; width: 100%"/>
+            <InputText id="email" v-model="user.email" type="email" required class="password-full-width"/>
           </div>
           <div class="p-field">
             <label for="password">Password</label>
             <div>
-              <Password id="password" v-model="user.password" required style="width: 100%;" />
+              <Password id="password" v-model="user.password" required class="password-full-width"/>
             </div>
+          </div>
+          <div class="p-field">
+            <label for="age">Age</label>
+            <InputText id="age" v-model="user.email" type="age" required class="password-full-width"/>
+          </div>
+          <div class="p-field">
+            <label for="address">Address</label>
+            <InputText id="address" v-model="user.email" type="address" required class="password-full-width"/>
           </div>
           <div class="button-container">
             <Button label="Register" type="submit" />
@@ -89,6 +98,16 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.password-full-width {
+  width: 100%;
+  margin-bottom: 1rem
+}
+
+.password-full-width :deep(.p-password),
+.password-full-width :deep(.p-inputtext) {
+  width: 100% !important;
+}
+
 .register-container {
   max-width: 400px;
   margin: 100px auto;

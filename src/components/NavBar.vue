@@ -17,8 +17,8 @@ export default defineComponent({
 
     const items = [
       { label: 'Home', icon: 'pi pi-home', command: () => router.push('/') },
-      // { label: 'About', icon: 'pi pi-table', command: () => router.push('/about') },
-      // { label: 'Contact', icon: 'pi pi-pencil', command: () => router.push('/contact') },
+      { label: 'Books', icon: 'pi pi-book', command: () => router.push('/books') },
+      { label: 'Profile', icon: 'pi pi-pencil', command: () => router.push('/profile') },
     ];
 
     const logout = () => {
@@ -45,10 +45,10 @@ export default defineComponent({
 <style scoped>
 .custom-menubar {
   background-color: lightgreen !important;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 .logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: white;
   margin-right: 20px;

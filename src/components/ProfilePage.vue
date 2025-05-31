@@ -25,9 +25,9 @@ export default defineComponent({
     const credentials = ref({ email: '', password: '' });
 
     const onSubmit = async () => {
-      const { login } = useAuth();
-      const jwt = await login(credentials.value, authStore);
-      router.push(`/`);
+      // const { login } = useAuth();
+      // const jwt = await login(credentials.value, authStore);
+      // router.push(`/`);
     };
 
     return {
@@ -40,18 +40,28 @@ export default defineComponent({
 
 <template>
   <div class="login-container">
-    <Card style="width: 25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    <Card style="
+    width: 35rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease;">
       <template #title>
         <div class="title-container">
-          <h2>Login</h2>
+          <h2>Profile details</h2>
         </div>
       </template>
       <template #content>
         <Form @submit.prevent="onSubmit">
           <div class="p-field">
-            <label for="email">Email</label>
-            <InputText id="email" v-model="credentials.email" type="email" required class="password-full-width"/>
+            <label for="name" class="block mb-1">Name</label>
+            <div>
+              <InputText id="name" v-model="credentials.email" type="name" required class="password-full-width"/>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="email" class="block mb-1">Email</label>
+            <div>
+              <InputText id="email" v-model="credentials.email" type="email" required class="password-full-width"/>
+            </div>
           </div>
           <div class="p-field">
             <label for="password">Password</label>
@@ -59,11 +69,20 @@ export default defineComponent({
               <Password id="password" v-model="credentials.password" required class="password-full-width"/>
             </div>
           </div>
-          <div class="button-container">
-            <Button label="Login" type="submit" />
+          <div class="p-field">
+            <label for="age" class="block mb-1">Age</label>
+            <div>
+              <InputText id="age" v-model="credentials.email" type="number" min="1" max="120" required class="password-full-width"/>
+            </div>
           </div>
-          <div class="login-link">
-            Dont have an account? <router-link to="/register">Register</router-link>
+          <div class="p-field">
+            <label for="address" class="block mb-1">Adress</label>
+            <div>
+              <InputText id="address" v-model="credentials.email" type="address" required class="password-full-width"/>
+            </div>
+          </div>
+          <div class="button-container">
+            <Button label="Update" type="submit" style="width: 50%;"/>
           </div>
         </Form>
       </template>
@@ -83,7 +102,7 @@ export default defineComponent({
 }
 
 .login-container {
-  max-width: 400px;
+  max-width: 800px;
   margin: 100px auto;
   padding: 20px;
   display: flex;

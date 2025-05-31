@@ -38,7 +38,7 @@ const books = [
 
 <template>
   <div class="book-container">
-    <br><h2 class="center-text">My readings</h2>
+    <br><h2 class="center-text">Books Library</h2>
 
     <div class="book-grid">
       <Card v-for="(book, index) in books" :key="index" class="book-card">
@@ -61,8 +61,9 @@ const books = [
           <div class="center-text">Publisher</div>
         </template>
         <template #footer>
-          <div class="flex mt-1 w-full">
-            <Button label="Details" style="width: 100%" />
+          <div class="flex gap-2 mt-1 w-full">
+            <Button label="Details" class="flex-1" style="flex-grow: 1; width: 100%; margin-bottom: 1rem" />
+            <Button severity="secondary"  label="Add to Library" class="flex-1" style="flex-grow: 1; width: 100%;" />
           </div>
         </template>
       </Card>
@@ -81,6 +82,7 @@ const books = [
   width: 100%;
   padding: 0 2rem;
   margin-top: 1rem;
+  margin-bottom: 6rem;
 }
 
 .book-grid {
