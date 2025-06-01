@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import Card from 'primevue/card'
-import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
-import { ref } from 'vue'
+import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+
+// Fix the Leaflet icon issue
+delete (L.Icon.Default.prototype as any)._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+})
 
 const books = [
   {
@@ -12,7 +19,7 @@ const books = [
     author:'F. Scott Fitzgerald',
     description: 'A novel set in the 1920s that explores themes of decadence, idealism, resistance to change, social upheaval, and excess.',
     publisher: 'Scribner',
-    isbn: '9780743273565',
+    lat: 45.75, lng: 21.23,
   },
   {
     id: 2,
@@ -21,7 +28,7 @@ const books = [
     author: 'George Orwell',
     description: 'A dystopian novel set in a totalitarian society under constant surveillance.',
     publisher: 'Secker & Warburg',
-    isbn: '0451524938',
+    lat: 45.76, lng: 21.24
   },
   {
     id: 3,
@@ -30,7 +37,7 @@ const books = [
     author: 'Harper Lee',
     description: 'A dystopian novel set in a totalitarian society under constant surveillance.',
     publisher: 'J.B. Lippincott & Co.',
-    isbn: '978-0-06-112008-4',
+    lat: 45.77, lng: 21.25
   },
   {
     id: 4,
@@ -39,7 +46,7 @@ const books = [
     author: 'Jane Austen',
     description: 'A classic novel of manners that explores the themes of love, reputation, and class in early 19th-century England.',
     publisher: 'T. Egerton, Whitehall',
-    isbn: '978-0-19-953556-9',
+    lat: 45.75, lng: 21.23
   },
   {
     id: 5,
@@ -48,83 +55,38 @@ const books = [
     author: 'Herman Melville',
     description: 'test',
     publisher: 'T. Egerton, Whitehall',
-    isbn: '978-0-19-953556-9'
+    lat: 45.77, lng: 21.23
   },
 ];
 
-const selectedBook = ref(null);
-const displayDialog = ref(false);
-
-const showBookDetails = (book) => {
-  selectedBook.value = book;
-  displayDialog.value = true;
-};
 </script>
 
 <template>
-  <div class="book-container">
-    <br><h2 class="center-text">My readings</h2>
-
-    <div class="book-grid">
-      <Card v-for="(book, index) in books" :key="index" class="book-card">
-        <template #header>
-          <div class="image-container">
-            <img
-              alt="book cover"
-              :src="book.cover"
-              class="centered-image"
-            />
+  <div class="map-container">
+    <l-map ref="map" :zoom="13" :center="[45.75, 21.23]">
+      <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+      <l-marker v-for="book in books" :key="book.id" :lat-lng="[book.lat, book.lng]">
+        <l-popup>
+          <div v-if="book" class="book-details">
+            <div class="book-details-content">
+              <div class="book-image">
+                <img :src="book.cover" alt="Book Cover" class="book-cover" />
+              </div>
+              <div class="book-info">
+                <h3>{{ book.title }}</h3>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+                <p><strong>Description:</strong> {{ book.description }}</p>
+              </div>
+            </div>
           </div>
-        </template>
-        <template #title>
-          <div class="center-text">{{ book.title }}</div>
-        </template>
-        <template #subtitle>
-          <div class="center-text">{{ book.author }}</div>
-        </template>
-        <template #content>
-          <div class="center-text">{{ book.publisher }}</div>
-        </template>
-        <template #footer>
-          <div class="flex gap-2 mt-1 w-full">
-            <Button label="Details" @click="showBookDetails(book)" style="flex-grow: 1; width: 100%; margin-bottom: 1rem"/>
-            <Button severity="secondary"  label="Finish reading" class="flex-1" style="flex-grow: 1; width: 100%;" />
-          </div>
-        </template>
-      </Card>
-    </div>
-
-    <Dialog
-      v-model:visible="displayDialog"
-      :header="selectedBook?.title"
-      :style="{ width: '50vw' }"
-      :modal="true"
-      :closable="true"
-      :dismissableMask="true"
-    >
-      <div v-if="selectedBook" class="book-details">
-        <div class="book-details-content">
-          <div class="book-image">
-            <img :src="selectedBook.cover" alt="Book Cover" class="book-cover" />
-          </div>
-          <div class="book-info">
-            <h3>{{ selectedBook.title }}</h3>
-            <p><strong>Author:</strong> {{ selectedBook.author }}</p>
-            <p><strong>Publisher:</strong> {{ selectedBook.publisher }}</p>
-            <p><strong>ISBN: :</strong> {{ selectedBook.isbn }}</p>
-            <p><strong>Description:</strong> {{ selectedBook.description }}</p>
-          </div>
-        </div>
-      </div>
-      <template #footer>
-        <Button label="Close" @click="displayDialog = false" class="p-button-text" />
-      </template>
-    </Dialog>
+        </l-popup>
+      </l-marker>
+    </l-map>
   </div>
 </template>
 
 <style scoped>
-
 strong {
   font-weight: 700;
 }
@@ -155,82 +117,14 @@ strong {
   margin-top: 0;
 }
 
-.center-text {
-  text-align: center;
-  //margin-bottom: 1rem;
-}
-
-.book-container {
+.map-container {
+  position: relative;
   width: 100%;
-  padding: 0 2rem;
-  margin-top: 1rem;
-  margin-bottom: 6rem;
+  height: calc(100vh - 64px); /* Adjust this value based on your navbar height */
 }
 
-.book-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin: 0 auto;
-  margin-top: 2rem;
-  padding: 0 1rem;
-  max-width: 84rem;
-}
-
-.book-card {
-  width: 18rem;
-  overflow: hidden;
-  flex: 0 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease;
-}
-
-/* Optional: Add hover effect to make cards lift slightly when hovered */
-.book-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-}
-
-.image-container {
-  overflow: hidden;
-}
-
-.centered-image {
+:deep(.leaflet-container) {
   width: 100%;
-  height: 280px;
-  object-fit: contain;
-}
-
-@media (max-width: 1400px) {
-  .book-grid {
-    max-width: 1200px;
-  }
-}
-
-@media (max-width: 900px) {
-  .book-card {
-    width: calc(50% - 1rem);
-    min-width: 15rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .book-card {
-    width: 100%;
-    max-width: 20rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .book-container {
-    padding: 0 3rem; /* More padding on smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .book-container {
-    padding: 0 1.5rem; /* Adjusted for very small screens */
-  }
+  height: 100%;
 }
 </style>
-

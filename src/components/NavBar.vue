@@ -17,6 +17,7 @@ export default defineComponent({
 
     const items = [
       { label: 'Home', icon: 'pi pi-home', command: () => router.push('/') },
+      { label: 'Map', icon: 'pi pi-map', command: () => router.push('/map') },
       { label: 'Books', icon: 'pi pi-book', command: () => router.push('/books') },
       { label: 'Profile', icon: 'pi pi-pencil', command: () => router.push('/profile') },
     ];
@@ -52,6 +53,12 @@ export default defineComponent({
   font-weight: bold;
   color: white;
   margin-right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  margin-right: 0.5rem;
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link {

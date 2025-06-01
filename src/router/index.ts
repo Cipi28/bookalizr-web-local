@@ -7,6 +7,7 @@ import RegisterView from "@/views/RegisterView.vue";
 import { useAuthStore } from '@/stores/authStore';
 import BooksView from '@/views/BooksView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import MapView from '@/views/MapView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +19,7 @@ const router = createRouter({
         { path: '', name: 'Home', component: HomeView },
         { path: '/books', name: 'Books', component: BooksView },
         { path: '/profile', name: 'Profile', component: ProfileView },
+        { path: '/map', name: 'Map', component: MapView },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
       ],
     },
