@@ -151,7 +151,6 @@ strong {
 
 .center-text {
   text-align: center;
-  //margin-bottom: 1rem;
 }
 
 .book-container {
