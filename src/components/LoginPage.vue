@@ -20,7 +20,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const toast = useToast();
+    // const toast = useToast();
     const authStore = useAuthStore();
     const credentials = ref({ email: '', password: '' });
 
@@ -40,6 +40,7 @@ export default defineComponent({
 
 <template>
   <div class="login-container">
+    <div class="logo">Bookalizr</div>
     <Card style="width: 25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease;">
       <template #title>
@@ -72,6 +73,14 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.logo {
+  font-size: 4rem;
+  font-weight: bold;
+  color: lightgreen;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .password-full-width {
   width: 100%;
   margin-bottom: 1rem
@@ -87,6 +96,7 @@ export default defineComponent({
   margin: 100px auto;
   padding: 20px;
   display: flex;
+  flex-direction: column; /* Change to column direction */
   justify-content: center;
   align-items: center;
 }

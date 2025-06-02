@@ -83,7 +83,7 @@ const showBookDetails = (book) => {
         <template #footer>
           <div class="flex gap-2 mt-1 w-full">
             <Button label="Details" class="flex-1" style="flex-grow: 1; width: 100%; margin-bottom: 1rem" @click="showBookDetails(book)" />
-            <Button severity="secondary"  label="Register Book" class="flex-1" style="flex-grow: 1; width: 100%;" />
+            <Button severity="secondary"  label="Add to Readings" class="flex-1" style="flex-grow: 1; width: 100%;" />
           </div>
         </template>
       </Card>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
+import { ref, onMounted } from 'vue'
+import { useToast } from 'vue-toastification'
 import L from 'leaflet'
 
 // Fix the Leaflet icon issue
@@ -11,6 +13,44 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
 })
 
+const userLocationIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+const map = ref(null)
+const userLocation = ref<[number, number]>([45.75, 21.23]) // Default location (Timisoara)
+const hasUserLocation = ref(false)
+const toast = useToast()
+
+// Get user location on component mount
+onMounted(() => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // Success handler
+        userLocation.value = [position.coords.latitude, position.coords.longitude]
+        hasUserLocation.value = true
+
+        // Center the map on user location
+        if (map.value) {
+          map.value.leafletObject.setView(userLocation.value, 13)
+        }
+      },
+      (error) => {
+        // Error handler
+        console.error("Error getting location:", error)
+        // toast.info("Location not provided, default location set on Timisoara")
+      },
+      { timeout: 5000, maximumAge: 60000, enableHighAccuracy: true }
+    )
+  }
+})
+
 const books = [
   {
     id: 1,
@@ -19,7 +59,7 @@ const books = [
     author:'F. Scott Fitzgerald',
     description: 'A novel set in the 1920s that explores themes of decadence, idealism, resistance to change, social upheaval, and excess.',
     publisher: 'Scribner',
-    lat: 45.75, lng: 21.23,
+    lat: 45.77, lng: 21.237,
   },
   {
     id: 2,
@@ -46,7 +86,7 @@ const books = [
     author: 'Jane Austen',
     description: 'A classic novel of manners that explores the themes of love, reputation, and class in early 19th-century England.',
     publisher: 'T. Egerton, Whitehall',
-    lat: 45.75, lng: 21.23
+    lat: 45.74, lng: 21.23
   },
   {
     id: 5,
@@ -63,8 +103,22 @@ const books = [
 
 <template>
   <div class="map-container">
-    <l-map ref="map" :zoom="13" :center="[45.75, 21.23]">
+    <l-map ref="map" :zoom="13" :center="userLocation">
       <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
+      <!-- User location marker -->
+      <l-marker
+        v-if="userLocation"
+        :lat-lng="userLocation"
+        :icon="userLocationIcon"
+      >
+        <l-popup>
+          <div>
+            <h3 v-if="hasUserLocation">Your Location</h3>
+            <p v-if="hasUserLocation">Current position</p>
+            <p v-else>Default location (Timisoara)</p>
+          </div>
+        </l-popup>
+      </l-marker>
       <l-marker v-for="book in books" :key="book.id" :lat-lng="[book.lat, book.lng]">
         <l-popup>
           <div v-if="book" class="book-details">

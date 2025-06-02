@@ -2,7 +2,15 @@
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore.ts'
+import { useAuth } from '@/composables/AuthentificationAPI.ts'
+
+const router = useRouter();
+// const toast = useToast();
+const authStore = useAuthStore();
+const myReadings = ref([]);
 
 const books = [
   {
@@ -59,11 +67,22 @@ const showBookDetails = (book) => {
   selectedBook.value = book;
   displayDialog.value = true;
 };
+
+const getBooks = async () => {
+};
+
+const finishReading = async (readingId: number) => {
+};
+
+onMounted(() => {
+  console.log("here");
+  getBooks();
+});
 </script>
 
 <template>
   <div class="book-container">
-    <br><h2 class="center-text">My readings</h2>
+    <br><h2 class="center-text">My current readings</h2>
 
     <div class="book-grid">
       <Card v-for="(book, index) in books" :key="index" class="book-card">

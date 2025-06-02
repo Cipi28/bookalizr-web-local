@@ -27,8 +27,9 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         const { register } = useAuth();
-        const jwt = await register(user.value, authStore);
-        router.push(`/`);
+        const response = await register(user.value, authStore);
+
+        //todo: handle response and store JWT token if needed
 
         // Store the JWT token if returned from registration
         // if (response && response.jwt) {
@@ -39,6 +40,8 @@ export default defineComponent({
         //   toast.success('Registration successful! Please login.');
         //   router.push('/login');
         // }
+
+        router.push(`/`);
       } catch (error: any) {
         toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
       }
@@ -54,6 +57,7 @@ export default defineComponent({
 
 <template>
   <div class="register-container">
+    <div class="logo">Bookalizr</div>
     <Card style="width: 25rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.3s ease;" >
       <template #title>
@@ -77,14 +81,6 @@ export default defineComponent({
               <Password id="password" v-model="user.password" required class="password-full-width"/>
             </div>
           </div>
-          <div class="p-field">
-            <label for="age">Age</label>
-            <InputText id="age" v-model="user.email" type="age" required class="password-full-width"/>
-          </div>
-          <div class="p-field">
-            <label for="address">Address</label>
-            <InputText id="address" v-model="user.email" type="address" required class="password-full-width"/>
-          </div>
           <div class="button-container">
             <Button label="Register" type="submit" />
           </div>
@@ -98,6 +94,14 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.logo {
+  font-size: 4rem;
+  font-weight: bold;
+  color: lightgreen;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .password-full-width {
   width: 100%;
   margin-bottom: 1rem
@@ -113,6 +117,7 @@ export default defineComponent({
   margin: 100px auto;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

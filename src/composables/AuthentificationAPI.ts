@@ -13,7 +13,7 @@ export function useAuth() {
 
   async function register(credentials: { name: string; email: string; password: string }, authStore: any) {
     try {
-      const response = await call('get', `/register`, credentials);
+      const response = await call('post', `/register`, credentials);
       authStore.setJwt(response.jwt);
     } catch (error) {
       throw new Error(`Register failed: ${error.message}`);
