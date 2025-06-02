@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig, type Method } from 'axios';
 import { useAuthStore } from '@/stores/authStore';
 
 const BASE_URL = 'http://localhost:5002';
-
+//http://nobody.home.ro:8080/api/readings?latitude=45.7483831?longitude=21.2370565
 
 export async function call(method: Method, endpoint: string, data?: any, config?: AxiosRequestConfig) {
     const url = `${BASE_URL}${endpoint}`;
