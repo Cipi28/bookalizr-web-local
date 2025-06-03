@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
@@ -17,6 +18,7 @@ export default defineComponent({
     Button,
   },
   setup() {
+    const router = useRouter();
     const toast = useToast();
     const authStore = useAuthStore();
     const user = ref({ name: '', email: '', password: '' });
@@ -25,6 +27,8 @@ export default defineComponent({
       try {
         const { register } = useAuth();
         await register(user.value, authStore);
+
+        router.push(`/login`);
       } catch (error: any) {
         toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
       }
