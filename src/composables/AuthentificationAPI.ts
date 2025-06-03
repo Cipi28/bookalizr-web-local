@@ -1,6 +1,7 @@
 import { call } from '@/composables/HTTPClient.js';
-import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+
 
 export function useAuth() {
   const router = useRouter();
@@ -10,7 +11,6 @@ export function useAuth() {
     try {
       const response = await call('post', `/authentication/login`, credentials);
       authStore.setJwt(response.token);
-      router.push("/");
     } catch (error) {
       toast.error(`Credentials are not valid`);
       throw new Error(`Login failed: ${error.message}`);
@@ -21,15 +21,28 @@ export function useAuth() {
     try {
       await call('post', `/authentication/register`, credentials);
       toast.success('Registration successful! Please log in.');
-      router.push("/login");
+      if (router) {
+        await router.push("/login");
+      }
     } catch (error) {
       toast.error(`${error}`)
       throw new Error(`Register failed: ${error.message}`);
     }
   }
 
+  async function getUser() {
+    try {
+      const user = await call('get', `/user/me`);
+      return user;
+    } catch (error) {
+      toast.error(`${error}`)
+      throw new Error(`: ${error.message}`);
+    }
+  }
+
   return {
     login,
-    register
+    register,
+    getUser
   };
 }

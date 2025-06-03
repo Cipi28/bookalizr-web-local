@@ -1,31 +1,42 @@
-import { call } from '@/composables/HTTPClient.js';
+import { call } from '@/composables/HTTPClient.js'
 
 export function ReadingsAPI() {
-
-  async function getReadings(domainId: string) {
+  async function getUserReadings(email: string) {
     try {
-      const data = await call('get', `/`);
-      return {
-        returnedData: data,
-      };
+      return await call('get', `/api/reading/user-books/${email}`)
     } catch (error) {
-      throw new Error(`Error fetching domain details: ${error.message}`);
+      throw new Error(`Error fetching domain details: ${error.message}`)
     }
   }
 
-  async function addReading(domainId: string) {
+  async function addReading(reading) {
     try {
-      const data = await call('post', `/`);
-      return {
-        returnedData: data,
-      };
+      return await call('post', `/api/reading`, reading)
     } catch (error) {
-      throw new Error(`Error fetching domain details: ${error.message}`);
+      throw new Error(`Error fetching domain details: ${error.message}`)
+    }
+  }
+
+  async function deleteReading(name, isbn) {
+    try {
+      return await call('delete', `/api/reading/${name}/${isbn}`)
+    } catch (error) {
+      throw new Error(`Error fetching domain details: ${error.message}`)
+    }
+  }
+
+  async function getNearbyReadings(lat, long, name) {
+    try {
+      return await call('get', `/api/reading/nearby?latitude=${lat}&longitude=${long}&username=${name}`)
+    } catch (error) {
+      throw new Error(`Error fetching domain details: ${error.message}`)
     }
   }
 
   return {
-    getReadings,
-    addReading
-  };
+    getUserReadings,
+    addReading,
+    deleteReading,
+    getNearbyReadings
+  }
 }

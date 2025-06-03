@@ -1,13 +1,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import { useToast } from "vue-toastification";
 import { useAuthStore } from '@/stores/authStore';
-import { call } from "@/composables/HTTPClient.ts";
 import {useAuth} from "@/composables/AuthentificationAPI.ts";
 
 export default defineComponent({
@@ -19,7 +17,6 @@ export default defineComponent({
     Button,
   },
   setup() {
-    const router = useRouter();
     const toast = useToast();
     const authStore = useAuthStore();
     const user = ref({ name: '', email: '', password: '' });
@@ -27,21 +24,7 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         const { register } = useAuth();
-        const response = await register(user.value, authStore);
-
-        //todo: handle response and store JWT token if needed
-
-        // Store the JWT token if returned from registration
-        // if (response && response.jwt) {
-        //   authStore.setJwt(String(response.jwt));
-        //   toast.success('Registration successful!');
-        //   router.push('/');
-        // } else {
-        //   toast.success('Registration successful! Please login.');
-        //   router.push('/login');
-        // }
-
-        router.push(`/`);
+        await register(user.value, authStore);
       } catch (error: any) {
         toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
       }

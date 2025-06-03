@@ -5,7 +5,6 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
-import {useToast} from "vue-toastification";
 import { useAuthStore } from '@/stores/authStore';
 import { useAuth } from '@/composables/AuthentificationAPI.ts';
 
@@ -26,8 +25,8 @@ export default defineComponent({
 
     const onSubmit = async () => {
       const { login } = useAuth();
-      const jwt = await login(credentials.value, authStore);
-      router.push(`/`);
+      await login(credentials.value, authStore);
+      await router.push("/");
     };
 
     return {

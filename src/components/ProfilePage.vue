@@ -1,5 +1,5 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
@@ -9,38 +9,19 @@ import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
 import { useAuth } from '@/composables/AuthentificationAPI.ts'
 
-export default defineComponent({
-  name: 'LoginPage',
-  components: {
-    Card,
-    InputText,
-    Password,
-    Button,
-  },
-  setup() {
-    const router = useRouter()
-    const toast = useToast()
-    const authStore = useAuthStore()
-    const credentials = ref({ email: '', password: '', name: '' })
+const user = ref({});
+const getUserInfo = async () => {
+  const { getUser } = useAuth();
+  try {
+    user.value = await getUser();
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+  }
+};
 
-    const getCredentials = async () => {
-      //todo: get name from store or API
-      credentials.value = {
-        email: 'testMail',
-        password: 'testPassword',
-        name: 'testName',
-      }
-    }
-
-    return {
-      getCredentials,
-      credentials,
-    }
-  },
-  mounted() {
-    this.getCredentials()
-  },
-})
+onMounted(async () => {
+  await getUserInfo();
+});
 </script>
 
 <template>
@@ -63,7 +44,7 @@ export default defineComponent({
           <div>
             <InputText
               id="name"
-              v-model="credentials.email"
+              v-model="user.email"
               type="name"
               required
               class="password-full-width"
@@ -75,24 +56,13 @@ export default defineComponent({
           <div>
             <InputText
               id="email"
-              v-model="credentials.name"
+              v-model="user.name"
               type="email"
               required
               class="password-full-width"
             />
           </div>
         </div>
-<!--        <div class="p-field">-->
-<!--          <label for="password">Password</label>-->
-<!--          <div>-->
-<!--            <Password-->
-<!--              id="password"-->
-<!--              v-model="credentials.password"-->
-<!--              required-->
-<!--              class="password-full-width"-->
-<!--            />-->
-<!--          </div>-->
-<!--        </div>-->
       </template>
     </Card>
   </div>
